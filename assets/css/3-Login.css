@@ -1,0 +1,45 @@
+@import 'variables.css';
+
+/* 
+   ESTILOS ESPECÍFICOS DA TELA DE LOGIN
+   Aqui pode alterar cores, fontes e comportamentos exclusivos desta página.
+*/
+
+/* 1. FUNDO DA PÁGINA (LIGHT E DARK MODE) */
+body {
+  font-family: 'Inter', sans-serif;
+  /*!important para garantir que suas mudanças aqui sempre vençam o Tailwind */
+  background-color: var(--color-bg-body) !important;
+  color: var(--color-text-main);
+}
+
+.dark body {
+  background-color: var(--color-dark-bg-body) !important;
+  color: var(--color-dark-text-main);
+}
+
+/* ÍCONES DO GOOGLE (Material Symbols) */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400;
+}
+
+.pokeball-pattern {
+  background-color: #eb1923;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 20%, transparent 21%),
+    linear-gradient(to bottom, transparent 49%, rgba(255, 255, 255, 0.1) 49%, rgba(255, 255, 255, 0.1) 51%, transparent 51%);
+  background-size: 60px 60px;
+}
+
+.quote-font {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+}
+
+/* BACKGROUND IMAGE & OVERLAY */
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%);
+  z-index: 1;
+}

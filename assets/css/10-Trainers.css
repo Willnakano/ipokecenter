@@ -1,0 +1,81 @@
+/**
+ * ESTILOS DA PÁGINA DE TREINADORES (10-Trainers.css)
+ */
+@import 'variables.css';
+
+/* 1. Reset e Tipografia */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-bg-body) !important;
+}
+
+/* 2. Barra Lateral de Treinadores */
+#trainer-list::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+#trainer-list > div {
+    border-left-width: 4px;
+    border-left-color: transparent;
+}
+
+#trainer-list > div.bg-zinc-50 {
+    background-color: #f9fafb;
+    border-left-color: var(--color-primary);
+}
+
+.dark #trainer-list > div.dark\:bg-zinc-800 {
+    background-color: #27272a;
+    border-left-color: var(--color-primary);
+}
+
+/* 3. Transições de Perfil */
+#profile-view {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.translate-y-4 {
+    transform: translateY(1rem);
+}
+
+/* 4. Glassmorphism e Efeitos */
+.bg-white\/70 {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.dark .dark\:bg-zinc-950\/70 {
+    background-color: rgba(9, 9, 11, 0.7);
+}
+
+/* Estilo para Cards de Pokémon na Party */
+#trainer-party-grid > div {
+    transition: all 0.3s ease;
+}
+
+#trainer-party-grid > div:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-primary-faded);
+}
+
+.dark #trainer-party-grid > div:hover {
+    border-color: rgba(178, 34, 0, 0.3);
+}
+
+/* 5. Tabela de Histórico */
+table tr {
+    transition: background-color 0.2s ease;
+}
+
+/* Sincronização com o tema global do PokéSystem */
+.bg-primary {
+    background-color: var(--color-primary) !important;
+}
+
+.text-primary {
+    color: var(--color-primary) !important;
+}

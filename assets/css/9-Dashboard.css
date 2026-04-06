@@ -1,0 +1,23 @@
+@import 'variables.css';
+
+/* 
+   ESTILOS DO DASHBOARD (PAINEL PRINCIPAL)
+   Controle de ícones e cores globais do tema.
+*/
+
+/* 1. CONFIGURAÇÃO DE ÍCONES */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* 2. COR DE FUNDO PADRÃO (LIGHT MODE) */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-bg-body) !important;
+    color: var(--color-text-main) !important;
+}
+
+
+/* 
+   NOTA: As cores e sobrescritas do modo escuro são gerenciadas centralmente no variables.css.
+*/

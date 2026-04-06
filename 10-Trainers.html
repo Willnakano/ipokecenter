@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Treinadores | iPokeCenter</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/10-Trainers.css">
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/10-Trainers.js"></script>
+    <link rel="icon" type="image/svg+xml" href="assets/images/pokeball.svg">
+</head>
+
+<body class="bg-background text-on-surface antialiased">
+    <!-- Modal de Adicionar Pokémon (Reutilizado) -->
+    <div id="add-trainer-pokemon-modal"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-in fade-in duration-300">
+        <div
+            class="bg-white dark:bg-zinc-900 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+            <div
+                class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/50">
+                <h3 class="text-xl font-black tracking-tight dark:text-white">Registrar no Time</h3>
+                <button id="close-trainer-modal"
+                    class="p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-zinc-400" translate="no">close</span>
+                </button>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Search Box -->
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Nome oficial
+                        (Inglês)</label>
+                    <div class="relative">
+                        <input id="trainer-poke-name" type="text" placeholder="Ex: Pikachu, Mewtwo..."
+                            class="w-full pl-5 pr-12 py-4 bg-zinc-50 dark:bg-zinc-800 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-primary/20 transition-all dark:text-white dark:placeholder:text-zinc-600">
+                        <button id="fetch-trainer-pokemon"
+                            class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-primary text-white rounded-xl shadow-lg active:scale-90 transition-all">
+                            <span class="material-symbols-outlined text-sm" translate="no">search</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Area -->
+                <div id="trainer-preview-area"
+                    class="h-48 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border-2 border-dashed border-zinc-200 dark:border-zinc-700 flex flex-col items-center justify-center relative group overflow-hidden">
+                    <div id="trainer-preview-placeholder" class="text-center">
+                        <span class="material-symbols-outlined text-3xl text-zinc-300"
+                            translate="no">image_search</span>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-zinc-400 mt-2">Aguardando
+                            busca...</p>
+                    </div>
+                    <img id="trainer-preview-img" class="w-32 h-32 object-contain hidden drop-shadow-2xl z-10" src="">
+                </div>
+
+                <!-- Hidden inputs -->
+                <input id="trainer-poke-type" type="hidden">
+                <input id="trainer-poke-img" type="hidden">
+            </div>
+            <div class="p-6 bg-zinc-50 dark:bg-zinc-800/50 border-t border-zinc-100 dark:border-zinc-800 flex gap-4">
+                <button id="save-trainer-pokemon"
+                    class="flex-1 py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 hover:bg-primary-container transition-all">
+                    Confirmar Registro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Novo Treinador -->
+    <div id="new-trainer-modal"
+        class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-in fade-in duration-300">
+        <div
+            class="bg-white dark:bg-zinc-900 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+            <div
+                class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/50">
+                <h3 class="text-xl font-black tracking-tight dark:text-white uppercase tracking-tighter">Novo Desafiante
+                </h3>
+                <button id="close-new-trainer-modal"
+                    class="p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-zinc-400" translate="no">close</span>
+                </button>
+            </div>
+            <div class="p-8 space-y-6">
+                <!-- Inputs Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Nome do
+                                Jogador</label>
+                            <input id="new-trainer-name" type="text" placeholder="Ex: Lucas, Alice..."
+                                class="w-full px-5 py-3.5 bg-zinc-50 dark:bg-zinc-800 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-primary/20 transition-all dark:text-white">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Título /
+                                Rank</label>
+                            <input id="new-trainer-title" type="text" placeholder="Ex: Treinador de Elite"
+                                class="w-full px-5 py-3.5 bg-zinc-50 dark:bg-zinc-800 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-primary/20 transition-all dark:text-white">
+                        </div>
+                    </div>
+                    <div class="space-y-1 flex flex-col">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1 mb-2">Prévia
+                            do Avatar</label>
+                        <div
+                            class="flex-1 rounded-2xl bg-zinc-50 dark:bg-zinc-800 border-2 border-dashed border-zinc-200 dark:border-zinc-700 flex items-center justify-center overflow-hidden">
+                            <img id="new-trainer-preview"
+                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+                                class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">URL da Foto (ou
+                        arquivo local)</label>
+                    <input id="new-trainer-avatar" type="text" placeholder="Ex: assets/images/foto.jpg ou link internet"
+                        class="w-full px-5 py-3.5 bg-zinc-50 dark:bg-zinc-800 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-primary/20 transition-all dark:text-white">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Biografia e
+                        Histórico</label>
+                    <textarea id="new-trainer-bio" rows="3" placeholder="Conte a história deste treinador..."
+                        class="w-full px-5 py-3.5 bg-zinc-50 dark:bg-zinc-800 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-primary/20 transition-all dark:text-white resize-none"></textarea>
+                </div>
+            </div>
+            <div class="p-6 bg-zinc-50 dark:bg-zinc-800/50 border-t border-zinc-100 dark:border-zinc-800 flex gap-4">
+                <button id="save-new-trainer"
+                    class="flex-1 py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    Registrar na Liga
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SideNavBar (Standardized) -->
+    <aside
+        class="fixed left-0 top-0 h-screen w-64 hidden lg:flex flex-col bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-50">
+        <div class="p-6">
+            <a href="9-Dashboard.html" class="block hover:opacity-80 transition-opacity">
+                <h1 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tighter">iPokeCenter</h1>
+            </a>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="9-Dashboard.html">
+                <span class="material-symbols-outlined" translate="no">dashboard</span>
+                <span class="text-sm font-semibold tracking-tight">Painel</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="8-Pokemon_Box.html">
+                <span class="material-symbols-outlined" translate="no">inventory_2</span>
+                <span class="text-sm font-semibold tracking-tight">Boxes</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="11-Party_Management.html">
+                <span class="material-symbols-outlined" translate="no">groups</span>
+                <span class="text-sm font-semibold tracking-tight">Party</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="7-Trainer_Profile.html">
+                <span class="material-symbols-outlined" translate="no">person</span>
+                <span class="text-sm font-semibold tracking-tight">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="6-Messages.html">
+                <span class="material-symbols-outlined" translate="no">chat</span>
+                <span class="text-sm font-semibold tracking-tight">Mensagens</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 bg-zinc-200/50 dark:bg-zinc-800/50 text-red-700 dark:text-red-400 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="10-Trainers.html">
+                <span class="material-symbols-outlined" translate="no">badge</span>
+                <span class="text-sm font-semibold tracking-tight">Treinadores</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="4-Professor_AI.html">
+                <span class="material-symbols-outlined" translate="no">psychology</span>
+                <span class="text-sm font-semibold tracking-tight">Professor IA</span>
+            </a>
+        </nav>
+        <div class="p-4 mt-auto border-t border-zinc-200 dark:border-zinc-800">
+            <div class="flex items-center gap-3 px-2 py-3">
+                <img class="w-10 h-10 rounded-full object-cover shadow-sm" src="assets/images/Nakano.jpg" />
+                <div class="flex flex-col overflow-hidden">
+                    <span class="text-sm font-bold truncate">Nakano</span>
+                    <span class="text-[10px] uppercase tracking-wider text-zinc-500">ELITE FOUR</span>
+                </div>
+            </div>
+            <button
+                class="w-full mt-2 py-2.5 bg-primary hover:bg-primary-container text-white rounded-lg text-sm font-bold transition-all active:scale-95">
+                Nova Captura
+            </button>
+        </div>
+    </aside>
+
+    <!-- Header (Standardized) -->
+    <header
+        class="fixed top-0 w-full z-40 bg-white/70 backdrop-blur-xl border-b border-zinc-100 dark:border-zinc-800 lg:pl-64">
+        <div class="flex justify-between items-center h-16 px-6 max-w-full">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md hidden md:block">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-lg"
+                        translate="no">search</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low dark:bg-zinc-800 border-none rounded-full text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-zinc-400"
+                        placeholder="Buscar treinadores ou rankings..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="theme-toggle"
+                    class="p-2 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 rounded-full transition-colors active:scale-95 flex items-center justify-center">
+                    <span class="material-symbols-outlined dark:hidden" translate="no">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block" translate="no">light_mode</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-zinc-200 overflow-hidden ml-2 md:hidden">
+                    <img class="w-full h-full object-cover" src="assets/images/Nakano.jpg" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="lg:ml-64 pt-16 pb-20 lg:pb-0 min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div class="flex flex-col lg:flex-row h-[calc(100vh-64px)]">
+            <!-- Trainer Selection Sidebar -->
+            <div
+                class="w-full lg:w-80 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col">
+                <div class="p-6 border-b border-zinc-100 dark:border-zinc-800">
+                    <h3 class="text-[10px] font-black tracking-widest uppercase text-zinc-400 mb-2">Liga iPokeCenter
+                    </h3>
+                    <h2 class="text-xl font-black tracking-tight dark:text-white">Treinadores Ativos</h2>
+                </div>
+                <div id="trainer-list"
+                    class="flex-1 overflow-y-auto scrollbar-hide divide-y divide-zinc-100 dark:divide-zinc-800">
+                    <!-- TREINADOR ESTÁTICO: RED (Mude a foto abaixo em src) -->
+                    <div class="trainer-static-item p-4 flex items-center gap-4 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all border-l-4 border-transparent"
+                        data-id="trainer-red">
+                        <div
+                            class="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 shadow-sm">
+                            <img src="assets/images/red.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 overflow-hidden">
+                            <h4 class="text-sm font-bold truncate dark:text-white">Red</h4>
+                            <p class="text-[9px] font-black tracking-widest text-zinc-400 uppercase">CAMPEÃO LENDÁRIO
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[9px] font-bold text-emerald-600 block">450V</span>
+                        </div>
+                    </div>
+
+                    <!-- TREINADOR ESTÁTICO: CYNTHIA (Mude a foto abaixo em src) -->
+                    <div class="trainer-static-item p-4 flex items-center gap-4 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all border-l-4 border-transparent"
+                        data-id="trainer-cynthia">
+                        <div
+                            class="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 shadow-sm">
+                            <img src="assets/images/cintia.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 overflow-hidden">
+                            <h4 class="text-sm font-bold truncate dark:text-white">Cynthia</h4>
+                            <p class="text-[9px] font-black tracking-widest text-zinc-400 uppercase">CAMPEÃ DE SINNOH
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[9px] font-bold text-emerald-600 block">380V</span>
+                        </div>
+                    </div>
+
+                    <!-- Trainer dynamic items injected via JS -->
+                </div>
+                <div class="p-4 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/30">
+                    <button id="btn-add-trainer"
+                        class="w-full py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2 group shadow-sm active:scale-95">
+                        <span class="material-symbols-outlined text-[16px] group-hover:rotate-90 transition-transform"
+                            translate="no">add</span>
+                        Adicionar Jogador
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile Detail View -->
+            <div id="profile-view"
+                class="flex-1 overflow-y-auto p-6 lg:p-10 space-y-8 bg-zinc-50 dark:bg-zinc-950 transition-all duration-300">
+                <!-- Profile Header Card (Hero) -->
+                <div
+                    class="bg-white dark:bg-zinc-900 rounded-3xl p-8 border border-zinc-100 dark:border-zinc-800 shadow-sm relative overflow-hidden">
+                    <div id="hero-bg"
+                        class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl">
+                    </div>
+                    <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center md:items-start">
+                        <div class="w-40 h-40 rounded-3xl overflow-hidden shadow-2xl relative group">
+                            <img id="profile-avatar" class="w-full h-full object-cover" src="" alt="Trainer Avatar">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                <span class="text-[10px] font-bold text-white uppercase tracking-widest">Nível
+                                    Elite</span>
+                            </div>
+                        </div>
+                        <div class="flex-1 text-center md:text-left space-y-4">
+                            <div>
+                                <span id="profile-title"
+                                    class="px-3 py-1 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 inline-block">Mestre
+                                    da Liga</span>
+                                <h1 id="profile-name" class="text-5xl font-black tracking-tighter dark:text-white">---
+                                </h1>
+                            </div>
+                            <p id="profile-bio"
+                                class="text-zinc-500 dark:text-zinc-400 font-medium max-w-xl leading-relaxed">---</p>
+
+                            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                                <div
+                                    class="bg-zinc-50 dark:bg-zinc-800/50 px-6 py-4 rounded-2xl border border-zinc-100 dark:border-zinc-700 min-w-[120px]">
+                                    <span
+                                        class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Vitórias</span>
+                                    <p id="stat-wins" contenteditable="true" class="text-2xl font-black text-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/10 rounded px-1 transition-all">--</p>
+                                </div>
+                                <div
+                                    class="bg-zinc-50 dark:bg-zinc-800/50 px-6 py-4 rounded-2xl border border-zinc-100 dark:border-zinc-700 min-w-[120px]">
+                                    <span
+                                        class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Derrotas</span>
+                                    <p id="stat-losses" contenteditable="true" class="text-2xl font-black text-red-600 focus:outline-none focus:ring-2 focus:ring-red-500/10 rounded px-1 transition-all">--</p>
+                                </div>
+                                <div
+                                    class="bg-zinc-50 dark:bg-zinc-800/50 px-6 py-4 rounded-2xl border border-zinc-100 dark:border-zinc-700 min-w-[120px]">
+                                    <span class="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Win
+                                        Rate</span>
+                                    <p id="stat-rate" class="text-2xl font-black text-blue-600">--%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Party Section -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="w-1 h-6 bg-primary rounded-full"></span>
+                        <h2 class="text-2xl font-black tracking-tight dark:text-white">Equipe Atual</h2>
+                    </div>
+                    <div id="trainer-party-grid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
+                        <!-- Botão Adicionar (sempre presente se houver espaço) -->
+                        <button id="open-trainer-modal"
+                            class="bg-zinc-100 dark:bg-zinc-800/30 border-2 border-dashed border-zinc-200 dark:border-zinc-700 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-zinc-50 transition-all group min-h-[160px]">
+                            <div
+                                class="w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-sm" translate="no">add</span>
+                            </div>
+                            <span class="text-[9px] font-black uppercase text-zinc-400">Adicionar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Match History Section -->
+                <div class="space-y-6 pb-20">
+                    <div class="flex items-center gap-3">
+                        <span class="w-1 h-6 bg-primary rounded-full"></span>
+                        <h2 class="text-2xl font-black tracking-tight dark:text-white">Últimos Combates</h2>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr
+                                    class="bg-zinc-50 dark:bg-zinc-800/50 border-b border-zinc-100 dark:border-zinc-800">
+                                    <th
+                                        class="px-6 py-4 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                        Oponente</th>
+                                    <th
+                                        class="px-6 py-4 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                        Resultado</th>
+                                    <th
+                                        class="px-6 py-4 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                        Placar</th>
+                                    <th
+                                        class="px-6 py-4 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                                        Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="match-history-rows" class="divide-y divide-zinc-50 dark:divide-zinc-800/50">
+                                <!-- Match rows injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Nav (Standardized) -->
+    <nav
+        class="fixed bottom-0 left-0 w-full z-50 flex lg:hidden justify-around items-center px-2 py-2 pb-safe bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-200 dark:border-zinc-800 overflow-x-auto">
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors shrink-0"
+            href="9-Dashboard.html">
+            <span class="material-symbols-outlined" translate="no">dashboard</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1">Painel</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors shrink-0"
+            href="8-Pokemon_Box.html">
+            <span class="material-symbols-outlined" translate="no">inventory_2</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1">Boxes</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors shrink-0"
+            href="11-Party_Management.html">
+            <span class="material-symbols-outlined" translate="no">groups</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1">Party</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors shrink-0"
+            href="7-Trainer_Profile.html">
+            <span class="material-symbols-outlined" translate="no">person</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1">Perfil</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-red-700 dark:text-red-500 scale-110 transition-colors shrink-0"
+            href="10-Trainers.html">
+            <span class="material-symbols-outlined" translate="no">badge</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1">Treinadores</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors shrink-0"
+            href="4-Professor_AI.html">
+            <span class="material-symbols-outlined" translate="no">psychology</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1">IA</span>
+        </a>
+    </nav>
+</body>
+
+</html>

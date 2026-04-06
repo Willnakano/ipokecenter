@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Perguntas IA | iPokeCenter</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        /* 
+           CONFIGURAÇÃO DO TAILWIND (PROFESSOR AI)
+           Altere as cores abaixo para mudar o visual dos botões e fundos.
+        */
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#b22200",      /* Cor vermelha principal */
+                        "background": "#fcf9f8",   /* Cor de fundo */
+                        "surface": "#fcf9f8",
+                        "on-primary-container": "#ffffff",
+                        "outline-variant": "#e5e2e1"
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/4-Professor_AI.js"></script>
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/4-Professor_AI.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/pokeball.svg">
+</head>
+
+<body class="bg-background text-on-surface antialiased min-h-screen">
+    <!-- SideNavBar (Standardized) -->
+    <aside
+        class="fixed left-0 top-0 h-screen w-64 hidden lg:flex flex-col bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-50">
+        <div class="p-6">
+            <a href="9-Dashboard.html" class="block hover:opacity-80 transition-opacity">
+                <h1 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tighter">iPokeCenter</h1>
+            </a>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="9-Dashboard.html">
+                <span class="material-symbols-outlined" translate="no">dashboard</span>
+                <span class="text-sm font-semibold tracking-tight">Painel</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="8-Pokemon_Box.html">
+                <span class="material-symbols-outlined" translate="no">inventory_2</span>
+                <span class="text-sm font-semibold tracking-tight">Boxes</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="11-Party_Management.html">
+                <span class="material-symbols-outlined" translate="no">groups</span>
+                <span class="text-sm font-semibold tracking-tight">Party</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="7-Trainer_Profile.html">
+                <span class="material-symbols-outlined" translate="no">person</span>
+                <span class="text-sm font-semibold tracking-tight">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="6-Messages.html">
+                <span class="material-symbols-outlined" translate="no">chat</span>
+                <span class="text-sm font-semibold tracking-tight">Mensagens</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="10-Trainers.html">
+                <span class="material-symbols-outlined" translate="no">badge</span>
+                <span class="text-sm font-semibold tracking-tight">Treinadores</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 bg-zinc-200/50 dark:bg-zinc-800/50 text-red-700 dark:text-red-400 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="4-Professor_AI.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400"
+                    translate="no">psychology</span>
+                <span class="text-sm font-semibold tracking-tight">Perguntas IA</span>
+            </a>
+        </nav>
+        <div class="p-4 mt-auto border-t border-zinc-200 dark:border-zinc-800">
+            <div class="flex items-center gap-3 px-2 py-3">
+                <img class="w-10 h-10 rounded-full object-cover shadow-sm" src="assets/images/Nakano.jpg" />
+                <div class="flex flex-col overflow-hidden">
+                    <span class="text-sm font-bold truncate">Nakano</span>
+                    <span class="text-[10px] uppercase tracking-wider text-zinc-500">ELITE FOUR</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- TopNavBar (Standard) -->
+    <header
+        class="fixed top-0 w-full z-40 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 lg:pl-64">
+        <div class="flex justify-between items-center h-16 px-6 max-w-full">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md hidden md:block">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-lg"
+                        translate="no">search</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-zinc-400"
+                        placeholder="Buscar na Pokédex..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+                    <span class="material-symbols-outlined" translate="no">notifications</span>
+                </button>
+                <button id="config-api-btn-top"
+                    class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+                    <span class="material-symbols-outlined" translate="no">settings</span>
+                </button>
+                <button id="theme-toggle"
+                    class="p-2 text-zinc-500 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 rounded-full transition-colors active:scale-95 flex items-center justify-center">
+                    <span class="material-symbols-outlined dark:hidden" translate="no">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block" translate="no">light_mode</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-zinc-200 overflow-hidden ml-2 md:hidden">
+                    <img class="w-full h-full object-cover" src="assets/images/Nakano.jpg" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="lg:pl-64 pt-20 h-screen flex flex-col bg-background">
+        <div class="flex-1 overflow-hidden flex flex-col lg:flex-row gap-6 p-6 lg:p-10 max-w-[1700px] mx-auto w-full">
+
+            <!-- Sidebar: Knowledge Capsules -->
+            <aside class="lg:w-80 flex flex-col gap-6 shrink-0 h-full overflow-y-auto chat-scroll pr-2">
+                <div class="glass-card p-6 rounded-3xl shadow-xl shadow-zinc-200/50 dark:shadow-none">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-zinc-400 mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm" translate="no">database</span>
+                        Base de Conhecimento
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-black text-rose-500 uppercase ml-2 tracking-tighter">Batalhas
+                                e Estratégia</span>
+                            <button
+                                class="suggestion-btn w-full text-left p-4 rounded-2xl bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 text-rose-700 dark:text-rose-400 transition-all text-xs font-bold flex items-center gap-3 group">
+                                "Como vencer a Misty?"
+                            </button>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-black text-blue-500 uppercase ml-2 tracking-tighter">Evolução
+                                e Genética</span>
+                            <button
+                                class="suggestion-btn w-full text-left p-4 rounded-2xl bg-blue-50 dark:bg-blue-500/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-700 dark:text-blue-400 transition-all text-xs font-bold flex items-center gap-3 group">
+                                "Como evoluir Lucario?"
+                            </button>
+                        </div>
+                        <div class="space-y-2">
+                            <span
+                                class="text-[10px] font-black text-emerald-500 uppercase ml-2 tracking-tighter">História
+                                e Lendários</span>
+                            <button
+                                class="suggestion-btn w-full text-left p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 transition-all text-xs font-bold flex items-center gap-3 group">
+                                "Onde está Rayquaza?"
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <section
+                class="flex-1 flex flex-col glass-card rounded-[2.5rem] shadow-2xl shadow-zinc-200/50 dark:shadow-none overflow-hidden relative">
+                <!-- Chat Window Header -->
+                <div
+                    class="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between bg-white/50 dark:bg-zinc-900/50">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-12 w-12 rounded-2xl overflow-hidden shadow-lg border-2 border-primary/20 bg-zinc-100">
+                            <img id="ai-avatar-top" src="assets/images/professor_oak.jpg"
+                                class="w-full h-full object-cover" alt="Professor">
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-black uppercase tracking-tight">Professor Carvalho <span
+                                    class="text-red-700 ml-1">(IA)</span></h4>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-[10px] font-bold text-zinc-400 uppercase">Sistema Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div id="chat-history" class="flex-1 overflow-y-auto p-8 space-y-8 chat-scroll">
+                    <!-- Welcome Message -->
+                    <div class="flex gap-4 items-start max-w-[85%] animate-in slide-in-from-left duration-500">
+                        <div class="h-12 w-12 shrink-0 rounded-2xl overflow-hidden shadow-md">
+                            <img src="assets/images/professor_oak.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div
+                            class="bg-white dark:bg-zinc-800 p-6 rounded-3xl rounded-tl-none shadow-sm border border-zinc-100 dark:border-zinc-700">
+                            <p class="text-sm font-bold text-red-700 mb-2">Olá, Treinador Nakano!</p>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium">Sou o
+                                Professor Carvalho. Como posso auxiliar na sua jornada Pokémon hoje? Use a barra abaixo
+                                para perguntar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Zone -->
+                <div class="p-6 bg-background">
+                    <div class="max-w-4xl mx-auto relative group">
+                        <div
+                            class="flex items-center gap-3 p-3 bg-white dark:bg-zinc-900 rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 group-focus-within:ring-4 ring-primary/10 transition-all">
+                            <div class="flex-1 flex items-center px-4">
+                                <span class="material-symbols-outlined text-zinc-400 text-xl mr-4"
+                                    translate="no">edit_square</span>
+                                <input id="chat-input" type="text" placeholder="Qual a sua dúvida, Treinador?"
+                                    class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm font-bold placeholder:text-zinc-400 dark:text-white">
+                            </div>
+                            <button id="send-btn"
+                                class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-600/40 hover:scale-110 active:scale-95 transition-all">
+                                <span class="material-symbols-outlined" translate="no">arrow_upward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- API Modal -->
+    <div id="api-modal"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-zinc-900/80 backdrop-blur-sm animate-in fade-in duration-300">
+        <div
+            class="bg-white dark:bg-zinc-900 w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl animate-in zoom-in-95 duration-300 border border-zinc-100 dark:border-zinc-800">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex flex-col">
+                    <h2 class="text-2xl font-black tracking-tighter uppercase">Credenciais AI</h2>
+                    <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Acesso de Alta
+                        Segurança</span>
+                </div>
+                <button id="close-api-modal" class="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full">
+                    <span class="material-symbols-outlined" translate="no">close</span>
+                </button>
+            </div>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2 ml-2">Google
+                        Gemini API Key</label>
+                    <input type="password" id="api-key-input" placeholder="Cole sua chave aqui..."
+                        class="w-full px-6 py-4 bg-zinc-50 dark:bg-zinc-800 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none font-bold">
+                </div>
+                <button id="save-api-key"
+                    class="w-full py-4 bg-zinc-900 dark:bg-red-600 text-white font-black rounded-2xl shadow-xl hover:translate-y-[-2px] active:translate-y-0 transition-all uppercase tracking-widest">
+                    Salvar Sincronização
+                </button>
+                <div
+                    class="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-700">
+                    <p class="text-[10px] text-zinc-500 font-medium leading-relaxed">Não tem uma chave? Gere
+                        gratuitamente no <a href="https://aistudio.google.com/" target="_blank"
+                            class="text-primary font-black underline">Google AI Studio</a>. Se preferir, continue no
+                        modo online grátis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav
+        class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-4 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl lg:hidden border-t border-zinc-200 dark:border-zinc-800 shadow-2xl shadow-black/20 overflow-x-auto">
+        <a class="flex flex-col items-center text-zinc-400" href="9-Dashboard.html"><span
+                class="material-symbols-outlined" translate="no">dashboard</span><span
+                class="text-[8px] font-black mt-1 uppercase">Painel</span></a>
+        <a class="flex flex-col items-center text-zinc-400" href="8-Pokemon_Box.html"><span
+                class="material-symbols-outlined" translate="no">inventory_2</span><span
+                class="text-[8px] font-black mt-1 uppercase">Box</span></a>
+        <a class="flex flex-col items-center text-primary scale-110" href="4-Professor_AI.html"><span
+                class="material-symbols-outlined" translate="no">psychology</span><span
+                class="text-[8px] font-black mt-1 uppercase">Perguntas IA</span></a>
+    </nav>
+</body>
+
+</html>

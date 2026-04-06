@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>iPokeCenter | Pokémon Box</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="assets/js/db.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="assets/js/8-Pokemon_Box.js"></script>
+    <link rel="stylesheet" href="assets/css/8-Pokemon_Box.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/pokeball.svg">
+</head>
+
+<body
+    class="bg-surface font-body text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <!-- SideNavBar -->
+    <aside
+        class="fixed left-0 top-0 h-screen w-64 hidden lg:flex flex-col bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-50">
+        <div class="p-6">
+            <a href="9-Dashboard.html" class="block hover:opacity-80 transition-opacity">
+                <h1 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tighter">iPokeCenter</h1>
+            </a>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="9-Dashboard.html">
+                <span class="material-symbols-outlined" translate="no">dashboard</span>
+                <span class="text-sm font-semibold tracking-tight">Painel</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 bg-zinc-200/50 dark:bg-zinc-800/50 text-red-700 dark:text-red-400 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="8-Pokemon_Box.html">
+                <span class="material-symbols-outlined" translate="no">inventory_2</span>
+                <span class="text-sm font-semibold tracking-tight">Boxes</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="11-Party_Management.html">
+                <span class="material-symbols-outlined" translate="no">groups</span>
+                <span class="text-sm font-semibold tracking-tight">Party</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="7-Trainer_Profile.html">
+                <span class="material-symbols-outlined" translate="no">person</span>
+                <span class="text-sm font-semibold tracking-tight">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="6-Messages.html">
+                <span class="material-symbols-outlined" translate="no">chat</span>
+                <span class="text-sm font-semibold tracking-tight">Mensagens</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="10-Trainers.html">
+                <span class="material-symbols-outlined" translate="no">badge</span>
+                <span class="text-sm font-semibold tracking-tight">Treinadores</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="4-Professor_AI.html">
+                <span class="material-symbols-outlined" translate="no">psychology</span>
+                <span class="text-sm font-semibold tracking-tight">Perguntas IA</span>
+            </a>
+        </nav>
+        <div class="p-4 mt-auto border-t border-zinc-200 dark:border-zinc-800">
+            <div class="flex items-center gap-3 px-2 py-3">
+                <img class="w-10 h-10 rounded-full object-cover"
+                    data-alt="Professional portrait of a competitive trainer in a clean studio setting with neutral grey background"
+                    src="assets/images/Nakano.jpg" />
+                <div class="flex flex-col overflow-hidden">
+                    <span class="text-sm font-bold truncate">Nakano</span>
+                    <span class="text-[10px] uppercase tracking-wider text-zinc-500">ELITE FOUR</span>
+                </div>
+            </div>
+            <button
+                class="w-full mt-2 py-2.5 bg-primary hover:bg-primary-container text-white rounded-lg text-sm font-bold transition-all active:scale-95">
+                Nova Captura
+            </button>
+        </div>
+    </aside>
+    <!-- TopNavBar -->
+    <header class="fixed top-0 w-full z-40 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border-b border-zinc-100 dark:border-zinc-800 lg:pl-64">
+        <div class="flex justify-between items-center h-16 px-6 max-w-full">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md hidden md:block">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-lg"
+                        translate="no">search</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low dark:bg-zinc-800 border-none rounded-full text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-zinc-400 dark:text-zinc-200"
+                        placeholder="Buscar na Pokédex..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+                    <span class="material-symbols-outlined" translate="no">notifications</span>
+                </button>
+                <button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+                    <span class="material-symbols-outlined" translate="no">settings</span>
+                </button>
+                <button id="theme-toggle"
+                    class="p-2 text-zinc-500 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 rounded-full transition-colors active:scale-95 flex items-center justify-center">
+                    <span class="material-symbols-outlined dark:hidden" translate="no">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block" translate="no">light_mode</span>
+                </button>
+
+                <div class="w-8 h-8 rounded-full bg-zinc-200 overflow-hidden ml-2 md:hidden">
+                    <img class="w-full h-full object-cover" data-alt="Avatar of trainer Red for mobile view"
+                        src="assets/images/Nakano.jpg" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TopNavBar Shell -->
+
+    <!-- SideNavBar Shell -->
+
+    <!-- Main Content Canvas -->
+    <main class="lg:pl-64 pt-16 pb-20 lg:pb-0 min-h-screen">
+        <div class="max-w-[1400px] mx-auto p-6 space-y-8">
+            <!-- Header & Filter Section -->
+            <section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span
+                            class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-black uppercase tracking-widest rounded">Box
+                            01</span>
+                        <h1 class="text-3xl font-black tracking-tight text-on-surface">
+                            Boxes de Pokémon</h1>
+                    </div>
+                    <p class="text-on-surface-variant text-sm font-medium"><span id="box-count-text">32/40</span> Slots
+                        Ocupados — <span id="box-percent" class="text-primary font-bold">8% restantes</span></p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center bg-surface-container-low p-1 rounded-xl">
+                        <button
+                            class="px-4 py-2 text-sm font-bold bg-surface-container-lowest shadow-sm rounded-lg text-primary transition-all">Todos
+                            os Tipos</button>
+
+                    </div>
+                </div>
+            </section>
+            <!-- Bento Grid of Pokemon Cards -->
+            <section id="pokemon-container"
+                class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                <!-- Pokemons e slot de ADICIONAR serão injetados aqui via JS -->
+            </section>
+        </div>
+    </main>
+    <!-- BottomNavBar Shell (Mobile only) -->
+
+
+    <!-- BottomNavBar (Mobile Only) -->
+
+    <nav
+        class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 pb-safe bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg lg:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-zinc-200 dark:border-zinc-800 overflow-x-auto">
+
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="9-Dashboard.html">
+            <span class="material-symbols-outlined" translate="no">dashboard</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Painel</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-red-700 dark:text-red-500 scale-110 transition-colors"
+            href="8-Pokemon_Box.html">
+            <span class="material-symbols-outlined" translate="no">inventory_2</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Box</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="11-Party_Management.html">
+            <span class="material-symbols-outlined" translate="no">groups</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Party</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="7-Trainer_Profile.html">
+            <span class="material-symbols-outlined" translate="no">person</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Perfil</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="6-Messages.html">
+            <span class="material-symbols-outlined" translate="no">chat</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Mensagens</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="10-Trainers.html">
+            <span class="material-symbols-outlined" translate="no">badge</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Treinadores</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="4-Professor_AI.html">
+            <span class="material-symbols-outlined" translate="no">psychology</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Perguntas
+                IA</span>
+        </a>
+    </nav>
+
+    <!-- Modal: Adicionar Pokémon -->
+    <div id="add-pokemon-modal"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div
+            class="bg-white dark:bg-zinc-900 w-full max-w-md rounded-2xl p-8 shadow-2xl scale-95 animate-in zoom-in-95 fill-mode-forwards duration-200 border border-zinc-200 dark:border-zinc-800">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black tracking-tight dark:text-white">Novo Pokémon</h2>
+                <button id="close-modal-x"
+                    class="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors">
+                    <span class="material-symbols-outlined dark:text-white" translate="no">close</span>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Preview Section -->
+                <div id="poke-preview"
+                    class="w-full h-32 bg-zinc-100 dark:bg-zinc-800/50 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-dashed border-zinc-200 dark:border-zinc-800 transition-all">
+                    <div id="preview-placeholder" class="text-zinc-400 text-center">
+                        <span class="material-symbols-outlined text-3xl" translate="no">image_search</span>
+                        <p class="text-[10px] font-bold uppercase mt-1">Aguardando Nome...</p>
+                    </div>
+                    <img id="preview-img" class="h-full object-contain hidden animate-in zoom-in-95 duration-300" src=""
+                        alt="Preview">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1.5">Nome do
+                        Pokémon (Oficial)</label>
+                    <div class="relative flex gap-2">
+                        <input type="text" id="poke-name" placeholder="Ex: Rayquaza"
+                            class="flex-1 px-4 py-3 bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white">
+                        <button id="fetch-pokemon"
+                            class="p-4 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-xl transition-all text-zinc-500">
+                            <span class="material-symbols-outlined" translate="no">search</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1.5">Nível
+                            (LVL)</label>
+                        <input type="number" id="poke-level" placeholder="100"
+                            class="w-full px-4 py-3 bg-zinc-100 dark:bg-zinc-800 border-none rounded-xl focus:ring-2 focus:ring-primary/20 outline-none dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1.5">Tipo
+                            (Auto)</label>
+                        <input type="text" id="poke-type" readonly placeholder="---"
+                            class="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-400 border-none rounded-xl cursor-not-allowed outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-1.5">URL da
+                        Imagem (Auto)</label>
+                    <input type="text" id="poke-img" readonly placeholder="https://..."
+                        class="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-400 border-none rounded-xl cursor-not-allowed outline-none text-[8px]">
+                </div>
+
+                <div class="pt-6">
+                    <button id="save-pokemon"
+                        class="w-full py-4 bg-primary text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm" translate="no">potted_plant</span>
+                        Finalizar Captura
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

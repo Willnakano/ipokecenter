@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iPokeCenter | Questions AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script>
+      /* 
+         CONFIGURAÇÃO DO TAILWIND (QUICK SETUP)
+         Mude as cores abaixo para alterar botões e fundos específicos desta página.
+      */
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#b22200",      /* Cor vermelha dos botões */
+              "background": "#fcf9f8",   /* Cor de fundo da página */
+              "surface": "#fcf9f8",
+              "on-primary-container": "#ffffff",
+              "outline-variant": "#e5e2e1"
+            }
+          }
+        }
+      };
+    </script>
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/5-Questions_AI.js"></script>
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/5-Questions_AI.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/pokeball.svg">
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 hidden lg:flex flex-col bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-50">
+<div class="p-6">
+<a href="9-Dashboard.html" class="block hover:opacity-80 transition-opacity">
+<h1 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tighter">iPokeCenter</h1>
+</a>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-900 dark:text-zinc-100 bg-zinc-200/50 dark:bg-zinc-800/50 rounded-lg active:translate-x-1 transition-all duration-150" href="9-Dashboard.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">dashboard</span>
+<span class="text-sm font-semibold tracking-tight">Painel</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150" href="8-Pokemon_Box.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">inventory_2</span>
+<span class="text-sm font-semibold tracking-tight">Box</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150" href="11-Party_Management.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">groups</span>
+<span class="text-sm font-semibold tracking-tight">Party</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150" href="7-Trainer_Profile.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">person</span>
+<span class="text-sm font-semibold tracking-tight">Perfil</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150" href="6-Messages.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">chat</span>
+<span class="text-sm font-semibold tracking-tight">Mensagens</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150" href="10-Trainers.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">badge</span>
+<span class="text-sm font-semibold tracking-tight">Treinadores</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150" href="4-Professor_AI.html">
+<span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">psychology</span>
+<span class="text-sm font-semibold tracking-tight">Perguntas IA</span>
+</a>
+</nav>
+<div class="p-4 mt-auto border-t border-zinc-200 dark:border-zinc-800">
+<div class="flex items-center gap-3 px-2 py-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Professional portrait of a competitive trainer in a clean studio setting with neutral grey background" src="assets/images/Nakano.jpg"/>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-bold truncate">Nakano</span>
+<span class="text-[10px] uppercase tracking-wider text-zinc-500">ELITE FOUR</span>
+</div>
+</div>
+<button class="w-full mt-2 py-2.5 bg-primary hover:bg-primary-container text-white rounded-lg text-sm font-bold transition-all active:scale-95">
+                Nova Captura
+            </button>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-40 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 lg:pl-64">
+<div class="flex justify-between items-center h-16 px-6 max-w-full">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-lg" translate="no">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-zinc-400" placeholder="Buscar na Pokédex..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined" translate="no">notifications</span>
+</button>
+<button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined" translate="no">settings</span>
+</button>
+        <button id="theme-toggle" class="p-2 text-zinc-500 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 rounded-full transition-colors active:scale-95 flex items-center justify-center">
+            <span class="material-symbols-outlined dark:hidden" translate="no">dark_mode</span>
+            <span class="material-symbols-outlined hidden dark:block" translate="no">light_mode</span>
+        </button>
+
+<div class="w-8 h-8 rounded-full bg-zinc-200 overflow-hidden ml-2 md:hidden">
+<img class="w-full h-full object-cover" data-alt="Avatar of trainer Red for mobile view" src="assets/images/Nakano.jpg"/>
+</div>
+</div>
+</div>
+</header>
+
+<!-- Top Navigation Shell -->
+
+<!-- Sidebar Navigation Shell -->
+
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-24 pb-32 px-4 md:px-8 max-w-6xl mx-auto">
+<!-- Hero Header -->
+</section>
+<!-- Chat Experience Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- Sidebar Tips -->
+<div class="md:col-span-4 space-y-6 hidden md:block">
+<div class="p-6 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10">
+<h3 class="text-sm font-bold uppercase tracking-widest text-primary mb-4">Sugestões de Perguntas</h3>
+<div class="space-y-3">
+<button class="w-full text-left p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors text-sm font-medium border-b border-transparent">
+                            "How do I counter misty's Starmie?"
+                        </button>
+<button class="w-full text-left p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors text-sm font-medium border-b border-transparent">
+                            "Best EVs for a Jolly Garchomp?"
+                        </button>
+<button class="w-full text-left p-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors text-sm font-medium border-b border-transparent">
+                            "Optimal team for Battle Tower?"
+                        </button>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-xl h-48 group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Abstract digital high-tech laboratory interior with glowing red and orange holographic displays and futuristic interfaces" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmN7wXHZilbxlFifIsEL4i3a54vCWpwAp_kFCLvXsFHrJAd-d2l9RdexcZPMxUAB2UwmExiy32MAt01iX9F9jZEgstK_mG0Z6E1lhI_Mnw5cFA-cUwL-MqiOuTnltZ90IeCvdvtmquHe8lxqy9e17WR-o09gwlAKHLro6vSgKWj5qZUbvO08F4Ls7AAHprORLT8r9ZQgRTqz_3TQdX_t-lFnmxmVHxiyc9US_fKRMJLbIh8mQa3ZDgiQdDjG5lQX5GES4bCYGOPfI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6">
+<p class="text-white text-xs font-bold uppercase tracking-widest mb-1 opacity-80">Dica Pro</p>
+<p class="text-white font-bold leading-tight">Always check base speed tiers before a competitive match.</p>
+</div>
+</div>
+</div>
+<!-- Central Chat Core -->
+<div class="md:col-span-8 flex flex-col gap-6 h-full bg-background">
+<!-- Chat Bubble History -->
+<div class="flex flex-col gap-4">
+<!-- Professor Response -->
+<div class="flex gap-4 items-start">
+<div class="h-10 w-10 shrink-0 rounded-full bg-primary-container flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined" translate="no">school</span>
+</div>
+<div class="flex-1">
+<div class="p-6 bg-surface-container-lowest rounded-2xl rounded-tl-none border border-outline-variant/10 shadow-sm leading-relaxed text-on-surface">
+<p class="mb-4 font-semibold text-primary">Ask any question about your Pokémons or training strategies.</p>
+<p class="text-zinc-600">I am here to assist you with data-driven advice from the Kanto through Paldea regions. What's on your mind today, Trainer?</p>
+</div>
+</div>
+</div>
+<!-- User Query (Placeholder) -->
+<div class="flex gap-4 items-start flex-row-reverse">
+<div class="h-10 w-10 shrink-0 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-500 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up avatar of a young professional athlete trainer wearing high-tech fitness gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-_nx2kNW9P9HGz-jdCVAG5-dhHFvFiLlceQA2yg5vcpVXDznd2_c3Ur2RSCgvPb9gwk9Yk-gw2qby1F4bT5A6IHdlrB-VAYf2SK3Q6Ia3Sroue7zL0Li_gtFWuDrJ9Bz1OjIwJGIkeJWShVDHW-WM58Sikq_IidgKmHzQwzoVgDLwCMpZMpLkkikWbMa1Pf4JrPuM0fgxt-V-iwmdTjQXU-sVXd4A8pkuHQ2lCTb6h8LjcixlDZS0438fGolk-isee-8A3ovR4mw"/>
+</div>
+<div class="flex-1 flex justify-end">
+<div class="p-4 bg-zinc-800 text-white rounded-2xl rounded-tr-none shadow-md max-w-[80%]">
+<p>What's the best way to defeat Misty in Cerulean City?</p>
+</div>
+</div>
+</div>
+<!-- Professor Tips Response -->
+<div class="flex gap-4 items-start">
+<div class="h-10 w-10 shrink-0 rounded-full bg-primary-container flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined" translate="no">school</span>
+</div>
+<div class="flex-1">
+<div class="p-6 bg-surface-container-lowest rounded-2xl rounded-tl-none border border-outline-variant/10 shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-xs font-black uppercase tracking-widest text-zinc-400">Análise Concluída</span>
+</div>
+<p class="text-on-surface mb-4">Misty's Starmie is notorious for its Speed and Special Attack. To defeat Misty, use an <span class="text-primary font-bold">Electric-type</span> like <span class="font-bold">Pikachu</span> or a strong <span class="text-green-700 font-bold">Grass-type</span> like <span class="font-bold">Bulbasaur</span>.</p>
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-secondary-container">
+<h4 class="text-xs font-bold text-on-secondary-container uppercase mb-2">Nota de Estratégia</h4>
+<p class="text-sm text-zinc-600 leading-relaxed">Focus on debilitating her Starmie early with status moves like Thunder Wave or Sleep Powder to mitigate its speed advantage.</p>
+</div>
+<div class="mt-4 flex gap-2">
+<button class="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase bg-surface-container-high text-zinc-600 hover:bg-zinc-200 transition-colors">Helpful</button>
+<button class="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase bg-surface-container-high text-zinc-600 hover:bg-zinc-200 transition-colors">More Detail</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Zone -->
+<div class="sticky bottom-24 lg:bottom-8 mt-auto">
+<div class="glass-panel p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl bg-background">
+<div class="flex flex-col md:flex-row gap-3">
+<div class="relative flex-1 group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-zinc-400 transition-colors group-focus-within:text-primary" translate="no">chat_bubble</span>
+<input class="w-full pl-12 pr-4 py-4 bg-transparent border-b-2 border-surface-variant focus:border-primary outline-none text-on-surface font-medium transition-all" placeholder="Digite sua pergunta..." type="text"/>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-4 rounded-xl font-bold tracking-tight shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2">
+<span>Perguntar ao Professor</span>
+<span class="material-symbols-outlined text-lg" translate="no">send</span>
+</button>
+</div>
+<div class="mt-3 flex items-center justify-between px-2">
+<div class="flex gap-4">
+<button class="flex items-center gap-1.5 text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors">
+<span class="material-symbols-outlined text-sm" translate="no">attach_file</span>
+<span>Enviar Dados do Box</span>
+</button>
+<button class="flex items-center gap-1.5 text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors">
+<span class="material-symbols-outlined text-sm" translate="no">mic</span>
+<span>Comando de Voz</span>
+</button>
+</div>
+<p class="text-[10px] font-bold text-zinc-300 uppercase tracking-tighter">Powered by Pokédex Engine v.8</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+
+
+<!-- BottomNavBar (Mobile Only) -->
+
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 pb-safe bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg lg:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-zinc-200 dark:border-zinc-800 overflow-x-auto">
+
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="9-Dashboard.html">
+        <span class="material-symbols-outlined" translate="no">dashboard</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Painel</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="8-Pokemon_Box.html">
+        <span class="material-symbols-outlined" translate="no">inventory_2</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Box</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="11-Party_Management.html">
+        <span class="material-symbols-outlined" translate="no">groups</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Party</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="7-Trainer_Profile.html">
+        <span class="material-symbols-outlined" translate="no">person</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Perfil</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="6-Messages.html">
+        <span class="material-symbols-outlined" translate="no">chat</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Mensagens</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="10-Trainers.html">
+        <span class="material-symbols-outlined" translate="no">badge</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Treinadores</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors" href="4-Professor_AI.html">
+        <span class="material-symbols-outlined" translate="no">psychology</span>
+        <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Perguntas IA</span>
+    </a>
+</nav>
+
+</body></html>

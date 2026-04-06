@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - iPokeCenter v2.2</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Database Core -->
+    <script src="assets/js/db.js"></script>
+    <!-- Lógica da Página -->
+    <script src="assets/js/3-Login.js"></script>
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/3-Login.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/pokeball.svg">
+</head>
+
+<!-- 
+    BODY: Aqui definimos o comportamento básico da página. 
+    Se quiser mudar o fundo, preferencialmente mude no assets/css/3-Login.css 
+    Removi classes como 'bg-gray-100' que estavam travando suas alterações.
+-->
+
+<body class="dark:text-white flex items-center justify-center min-h-screen p-4 md:p-8">
+
+    <div
+        class="relative w-full max-w-[1200px] aspect-video bg-white dark:bg-gray-800 rounded-3xl shadow-2xl flex overflow-hidden">
+
+        <!-- LOGIN -->
+        <div class="flex-1 flex flex-col p-12 relative">
+
+            <!-- Toggle -->
+            <button id="theme-toggle"
+                class="absolute top-8 left-8 flex size-10 items-center justify-center rounded-lg border bg-white dark:bg-gray-750 shadow-sm hover:text-primary transition">
+                <span class="material-symbols-outlined dark:hidden" translate="no">dark_mode</span>
+                <span class="material-symbols-outlined hidden dark:block" translate="no">light_mode</span>
+            </button>
+
+            <div class="mt-auto mb-auto max-w-[400px] mx-auto w-full">
+
+                <!-- Header -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="size-10 flex items-center justify-center">
+                            <img src="assets/images/pokeball.svg" class="w-10 h-10 object-contain drop-shadow-md">
+                        </div>
+                        <span class="font-bold text-xl">iPokeCenter</span>
+                    </div>
+
+                    <h1 class="text-4xl font-black mb-2 dark:text-white">
+                        Bem-vindo, Treinador
+                    </h1>
+
+                    <p class="text-gray-500 dark:text-gray-300">
+                        Insira suas credenciais institucionais.
+                    </p>
+                </div>
+
+                <!-- FORM -->
+                <div class="flex flex-col gap-5">
+
+                    <!-- Campo de Nome (Aparece apenas no Registro) -->
+                    <div id="name-field" class="hidden relative animate-in fade-in slide-in-from-top-2 duration-300">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                            translate="no">badge</span>
+                        <input type="text" id="register-name" placeholder="Nome Completo"
+                            class="w-full pl-12 pr-4 py-3 border rounded-xl dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-primary/20 transition-all outline-none">
+                    </div>
+
+                    <!-- Campo de E-mail -->
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                            translate="no">email</span>
+                        <input type="email" id="login-email" placeholder="treinador@ipokecenter.com"
+                            class="w-full pl-12 pr-4 py-3 border rounded-xl dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-primary/20 transition-all outline-none">
+                    </div>
+
+                    <!-- Senha -->
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <label class="text-sm font-bold dark:text-gray-300">Senha</label>
+                            <a href="#" class="text-sm text-primary hover:underline">Esqueceu?</a>
+                        </div>
+
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                                translate="no">lock</span>
+                            <input type="password" id="login-password" placeholder="••••••••"
+                                class="w-full pl-12 pr-12 py-3 border rounded-xl dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-primary/20 transition-all outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Botão de Login -->
+                    <button id="login-btn"
+                        class="w-full text-center py-4 bg-primary text-white rounded-xl font-bold hover:brightness-110 active:scale-[0.98] transition-all">
+                        Iniciar Jornada →
+                    </button>
+
+                    <!-- Cadastro / Toggle -->
+                    <p id="auth-toggle-container" class="text-center text-sm text-gray-500 dark:text-gray-300">
+                        Novo treinador?
+                        <a href="#" id="toggle-auth" class="text-primary font-bold hover:underline">
+                            Solicitar acesso
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-auto text-xs flex justify-between text-gray-400 dark:text-gray-500">
+                <span>© 2026 ipokecenter</span>
+                <span>v1.1.1.1</span>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE (SINGLE IMAGE) -->
+        <div class="w-[45%] relative flex items-end p-12 text-white overflow-hidden bg-black">
+
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="assets/images/pc.png" alt="Pokemon Art"
+                    class="w-full h-full object-cover object-center opacity-80">
+            </div>
+
+            <!-- Gradient Overlay -->
+            <div class="carousel-overlay"></div>
+
+            <div class="absolute inset-0 pokeball-pattern opacity-5 pointer-events-none z-10"></div>
+
+            <!-- Bottom Info -->
+            <div class="relative z-20 w-full">
+                <h2 class="text-xl font-bold tracking-tight uppercase italic leading-none drop-shadow-lg opacity-90">
+                    Participe da Liga Pokémon!
+                </h2>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

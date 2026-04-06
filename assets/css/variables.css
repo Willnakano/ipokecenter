@@ -1,0 +1,95 @@
+/* 
+   ==========================================================================
+   POKESYSTEM DESIGN TOKENS (VARIÁVEIS GLOBAIS)
+   ==========================================================================
+   Este arquivo centraliza todas as cores e estilos do projeto.
+   Para mudar uma cor em todo o site, basta alterar o valor aqui.
+*/
+
+:root {
+  /* --- CORES PRINCIPAIS --- */
+  --color-primary: #b22200;           /* Vermelho padrão (Botões, ícones ativos) */
+  --color-primary-hover: #dd3107;     /* Vermelho ao passar o mouse */
+  --color-secondary: #785a00;         /* Amarelo/Dourado secundário */
+  
+  /* --- CORES DE FUNDO (LIGHT MODE) --- */
+  --color-bg-body: #fcf9f8;           /* Fundo geral da página */
+  --color-bg-card: #ffffff;           /* Fundo de cartões e brancos */
+  --color-bg-surface: #f0eded;        /* Superfícies cinza claro */
+  
+  /* --- CORES DE TEXTO (LIGHT MODE) --- */
+  --color-text-main: #1b1c1c;         /* Cor do texto principal */
+  --color-text-muted: #5c4039;        /* Texto secundário/suave */
+  --color-text-gray: #5c5c5c;         /* Cinza para descrições */
+
+  /* --- MODO ESCURO (DARK MODE) --- */
+  --color-dark-bg-body: #09090b;      /* Fundo geral no modo escuro */
+  --color-dark-bg-card: #18181b;      /* Fundo de cartões no modo escuro */
+  --color-dark-text-main: #f4f4f5;    /* Texto principal no modo escuro */
+  --color-dark-text-muted: #a1a1aa;   /* Texto suave no modo escuro */
+  --color-dark-border: #27272a;       /* Cor de borda no modo escuro */
+}
+
+/* 
+   ==========================================================================
+   REGRAS GLOBAIS DE SOBRESCRITA (DARK MODE)
+   ==========================================================================
+   Estas regras garantem que as classes do Tailwind e elementos básicos
+   se comportem corretamente quando o modo escuro está ativo (.dark no <html>).
+*/
+
+html.dark body, 
+html.dark .bg-background, 
+html.dark .bg-surface, 
+html.dark .bg-surface-bright { 
+    background-color: var(--color-dark-bg-body) !important; 
+    color: var(--color-dark-text-main) !important; 
+}
+
+html.dark .bg-surface-container-lowest, 
+html.dark .bg-surface-container-low, 
+html.dark .bg-surface-container, 
+html.dark .bg-white { 
+    background-color: var(--color-dark-bg-card) !important; 
+    color: var(--color-dark-text-main) !important; 
+}
+
+html.dark .bg-surface-container-high,
+html.dark .bg-surface-container-highest { 
+    background-color: var(--color-dark-border) !important; 
+}
+
+html.dark .text-on-surface, 
+html.dark .text-on-background, 
+html.dark .text-zinc-900,
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark p { 
+    color: var(--color-dark-text-main) !important; 
+}
+
+html.dark .text-on-surface-variant, 
+html.dark .text-zinc-600, 
+html.dark .text-zinc-500 { 
+    color: var(--color-dark-text-muted) !important; 
+}
+
+html.dark [class*="border-outline-variant"], 
+html.dark [class*="border-zinc-100"],
+html.dark [class*="border-zinc-200"] { 
+    border-color: var(--color-dark-border) !important; 
+}
+
+html.dark [class*="bg-white/"] { 
+    background-color: rgba(24, 24, 27, 0.8) !important; 
+}
+
+/* Ajustes para Glassmorphism no Dark Mode */
+html.dark .glass-card, 
+html.dark .glass-panel {
+    background: var(--color-dark-bg-card);
+    border: 1px solid var(--color-dark-border);
+}
+
+/* 
+   DICA: Você pode usar estas variáveis no seu CSS assim:
+   background-color: var(--color-primary); 
+*/

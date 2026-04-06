@@ -1,0 +1,73 @@
+@import 'variables.css';
+
+/* 
+   ESTILOS DA PÁGINA DE PERGUNTAS IA 
+*/
+
+/* 1. CONFIGURAÇÃO DE ÍCONES */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+
+/* 2. COR DE FUNDO (LIGHT MODE) */
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--color-bg-body) !important;
+}
+
+/* 3. ESTILO DOS PAINÉIS (Chat / Glassmorphism) */
+.glass-panel {
+    background: var(--color-bg-card);
+    border: 1px solid #e5e7eb;
+}
+
+.dark .glass-panel {
+    background: var(--color-dark-bg-card);
+    border: 1px solid #27272a;
+}
+
+
+/* DARK MODE GLOBAL OVERRIDES FIX */
+html.dark body, 
+html.dark .bg-background, 
+html.dark .bg-surface, 
+html.dark .bg-surface-bright { 
+    background-color: #09090b !important; 
+    color: #e4e4e7 !important; 
+}
+
+html.dark .bg-surface-container-lowest, 
+html.dark .bg-surface-container-low, 
+html.dark .bg-surface-container, 
+html.dark .bg-white { 
+    background-color: #18181b !important; 
+    color: #e4e4e7 !important; 
+}
+
+html.dark .bg-surface-container-high,
+html.dark .bg-surface-container-highest { 
+    background-color: #27272a !important; 
+}
+
+html.dark .text-on-surface, 
+html.dark .text-on-background, 
+html.dark .text-zinc-900,
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark p { 
+    color: #f4f4f5 !important; 
+}
+
+html.dark .text-on-surface-variant, 
+html.dark .text-zinc-600, 
+html.dark .text-zinc-500 { 
+    color: #a1a1aa !important; 
+}
+
+html.dark [class*="border-outline-variant"], 
+html.dark [class*="border-zinc-100"] { 
+    border-color: #27272a !important; 
+}
+
+html.dark [class*="bg-white/"] { 
+    background-color: rgba(24, 24, 27, 0.8) !important; 
+}

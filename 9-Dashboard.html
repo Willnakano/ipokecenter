@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>iPokeCenter Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/9-Dashboard.css">
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/9-Dashboard.js"></script>
+    <link rel="icon" type="image/svg+xml" href="assets/images/pokeball.svg">
+</head>
+
+<body class="bg-background min-h-screen">
+    <!-- SideNavBar -->
+    <aside
+        class="fixed left-0 top-0 h-screen w-64 hidden lg:flex flex-col bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-50">
+        <div class="p-6">
+            <a href="9-Dashboard.html" class="block hover:opacity-80 transition-opacity">
+                <h1 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tighter">iPokeCenter</h1>
+            </a>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 bg-zinc-200/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="9-Dashboard.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">dashboard</span>
+                <span class="text-sm font-semibold tracking-tight">Painel</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="8-Pokemon_Box.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400"
+                    translate="no">inventory_2</span>
+                <span class="text-sm font-semibold tracking-tight">Boxes</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="11-Party_Management.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">groups</span>
+                <span class="text-sm font-semibold tracking-tight">Party</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="7-Trainer_Profile.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">person</span>
+                <span class="text-sm font-semibold tracking-tight">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="6-Messages.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">chat</span>
+                <span class="text-sm font-semibold tracking-tight">Mensagens</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="10-Trainers.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400" translate="no">badge</span>
+                <span class="text-sm font-semibold tracking-tight">Treinadores</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30 rounded-lg active:translate-x-1 transition-all duration-150"
+                href="4-Professor_AI.html">
+                <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400"
+                    translate="no">psychology</span>
+                <span class="text-sm font-semibold tracking-tight">Perguntas IA</span>
+            </a>
+        </nav>
+        <div class="p-4 mt-auto border-t border-zinc-200 dark:border-zinc-800">
+            <div class="flex items-center gap-3 px-2 py-3">
+                <img class="w-10 h-10 rounded-full object-cover"
+                    data-alt="Professional portrait of a competitive trainer in a clean studio setting with neutral grey background"
+                    src="assets/images/Nakano.jpg" />
+                <div class="flex flex-col overflow-hidden">
+                    <span class="text-sm font-bold truncate">Nakano</span>
+                    <span class="text-[10px] uppercase tracking-wider text-zinc-500">ELITE FOUR</span>
+                </div>
+            </div>
+            <button
+                class="w-full mt-2 py-2.5 bg-primary hover:bg-primary-container text-white rounded-lg text-sm font-bold transition-all active:scale-95">
+                Nova Captura
+            </button>
+        </div>
+    </aside>
+    <!-- TopNavBar -->
+    <header class="fixed top-0 w-full z-40 bg-white/70 backdrop-blur-xl border-b border-zinc-100 lg:pl-64">
+        <div class="flex justify-between items-center h-16 px-6 max-w-full">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md hidden md:block">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-lg"
+                        translate="no">search</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-zinc-400"
+                        placeholder="Buscar na Pokédex..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+                    <span class="material-symbols-outlined" translate="no">notifications</span>
+                </button>
+                <button class="p-2 text-zinc-500 hover:bg-zinc-100/50 rounded-full transition-colors active:scale-95">
+                    <span class="material-symbols-outlined" translate="no">settings</span>
+                </button>
+                <button id="theme-toggle"
+                    class="p-2 text-zinc-500 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 rounded-full transition-colors active:scale-95 flex items-center justify-center">
+                    <span class="material-symbols-outlined dark:hidden" translate="no">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block" translate="no">light_mode</span>
+                </button>
+
+                <div class="w-8 h-8 rounded-full bg-zinc-200 overflow-hidden ml-2 md:hidden">
+                    <img class="w-full h-full object-cover" data-alt="Avatar of trainer Red for mobile view"
+                        src="assets/images/Nakano.jpg" />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SideNavBar -->
+
+    <!-- TopNavBar -->
+
+    <!-- Main Content Area -->
+    <main class="lg:pl-64 pt-16 pb-24 lg:pb-8 min-h-screen">
+        <div class="max-w-7xl mx-auto p-6 lg:p-10 space-y-10">
+            <!-- Page Header -->
+
+            <!-- Stats Grid -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Stat Card: Total Pokémon -->
+                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-outline-variant/15 flex flex-col justify-between group hover:border-primary/20 transition-all duration-300">
+                    <div class="flex justify-between items-start">
+                        <span class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Total de
+                            Pokemon</span>
+                        <div
+                            class="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center p-2 shadow-sm">
+                            <img src="assets/images/pokeball.svg" alt="Pokeball" class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span id="total-pokes-count" class="text-4xl font-black tracking-tighter">142</span>
+                        <div class="flex items-center gap-1.5 mt-1 text-secondary text-xs font-bold">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Stat Card: Party Size -->
+                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-outline-variant/15 flex flex-col justify-between group hover:border-primary/20 transition-all duration-300">
+                    <div class="flex justify-between items-start">
+                        <span class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Tamanho do
+                            Time</span>
+                        <div
+                            class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
+                            <span class="material-symbols-outlined" translate="no">groups</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-baseline gap-1">
+                            <span id="party-size-val" class="text-4xl font-black tracking-tighter">6</span>
+                            <span class="text-zinc-400 font-bold">/ 6</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-zinc-100 rounded-full mt-3 overflow-hidden">
+                            <div class="h-full bg-primary w-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Stat Card: Mensagens não lidas -->
+                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-outline-variant/15 flex flex-col justify-between group hover:border-primary/20 transition-all duration-300">
+                    <div class="flex justify-between items-start">
+                        <span class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Mensagens não
+                            lidas</span>
+                        <div
+                            class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;"
+                                translate="no">mail</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-4xl font-black tracking-tighter text-on-surface">3</span>
+                        <div class="flex items-center gap-1.5 mt-1 text-zinc-500 text-xs font-bold">
+                            <span>De: Oak, Misty, Brock</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Stat Card: Missões Ativas -->
+                <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-outline-variant/15 flex flex-col justify-between group hover:border-primary/20 transition-all duration-300">
+                    <div class="flex justify-between items-start">
+                        <span class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Missões
+                            Ativas</span>
+                        <div
+                            class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
+                            <span class="material-symbols-outlined" translate="no">assignment</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-4xl font-black tracking-tighter">2</span>
+                        <div class="flex items-center gap-1.5 mt-1 text-on-surface-variant text-xs font-bold">
+                            <span class="material-symbols-outlined text-sm" translate="no">schedule</span>
+                            <span>Liga indigo</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Main Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Recent Activity & Messaging -->
+                <div class="lg:col-span-8 space-y-10">
+                    <!-- Party Preview Widget -->
+                    <section class="space-y-4">
+                        <div class="flex justify-between items-end">
+                            <h3 class="text-xl font-bold tracking-tight">Party atual</h3>
+                            <a class="text-xs font-bold uppercase tracking-widest text-primary hover:underline"
+                                href="#">Manage Team</a>
+                        </div>
+                        <div id="party-slots-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                            <!-- Party Slot 1 -->
+                            <div
+                                class="bg-surface-container p-3 rounded-xl flex flex-col items-center gap-2 group transition-all cursor-pointer hover:bg-surface-container-high">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                    <img class="w-10 h-10 object-contain"
+                                        data-alt="Vibrant stylized electric rodent creature with sparks around its cheeks in a clean digital render style"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW7Nr8bXZbN0ob3ptONCfta1ViHcFWyD7owLQ60DNLmW9q3D8xp52O0qO9d8h523ZnNphe240JNahaK9IBFDZbvOgidsxggcZ633MqkhogmnBv9_0kqmlWah6J4gsHS6qtu7kSVkQCbKBkWUco2qiFLupga9uz6JMJxemZEFSYKh8TGWWRJBj1oulmlnYPRn_weVgi5uVpiEhoDqjIdeMsR7Ofj1iGbI-SyZQCFDOWN99dAV0SXnOE_sYIZsTngrW5f-FkuuzFpFQ" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold uppercase tracking-tighter text-zinc-900">Pikachu
+                                    </p>
+                                    <p class="text-[9px] font-medium text-zinc-500">Lv. 82</p>
+                                </div>
+                                <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[95%]"></div>
+                                </div>
+                            </div>
+                            <!-- Party Slot 2 -->
+                            <div
+                                class="bg-surface-container p-3 rounded-xl flex flex-col items-center gap-2 group transition-all cursor-pointer hover:bg-surface-container-high">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                    <img class="w-10 h-10 object-contain"
+                                        data-alt="Stylized blue turtle with a tough shell and water droplets in a studio lighting aesthetic"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBAS9yiapNujZkfeNllREHXU_DjF-9F2Pr54EuiitwZAJvJBEsyahZTTGUjilL9EjwlZ6dQQ9KevY60lK1JTemY-PyiVJTq0KNDIHy44U95Pezygx3RLGw5mKFXGtwlgN6uhqTjYSHDZ6ENaGwUZ-1OoYGQhjdg5km7sjzh7OXYjXC_22Fj3mhS8zOTWQVNR5-yEPgAriluX2anMN6PmkiT0t_trmyscJuAIDE46ksYT3PfF3zcKEW2Y6BafS6LzwJUYEvHxNpj-Q" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold uppercase tracking-tighter text-zinc-900">Blastoise
+                                    </p>
+                                    <p class="text-[9px] font-medium text-zinc-500">Lv. 78</p>
+                                </div>
+                                <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[100%]"></div>
+                                </div>
+                            </div>
+                            <!-- Party Slot 3 -->
+                            <div
+                                class="bg-surface-container p-3 rounded-xl flex flex-col items-center gap-2 group transition-all cursor-pointer hover:bg-surface-container-high">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                    <img class="w-10 h-10 object-contain"
+                                        data-alt="Stylized fire-breathing dragon with glowing orange scales and wings in a dramatic cinematic lighting"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA97YANyVXUXKMVJbtutY0LaSmgkp5Nusj3_S7XwI1AmCkRgfJLeXrzBexKtRNNRWoL_QVrcOQd4gdt2S8aeFZbIr0vQ-Wdo-t6y_N0E3F5_ict1EMqALxWSTpEShQqZGXdcs0ptSKtN-N920RoK9bq1Q0FnYZg5bcKJO6QbOqOQrnjjAqcHf2sbbTy7MQqBXB65n0AYMZAUgQTu-MxCh5-NxPgcvAsB0RgR1v2007TEUZTyLJ8Rq9Heo8_-4gUN_PuWQNusOf9Kks" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold uppercase tracking-tighter text-zinc-900">Charizard
+                                    </p>
+                                    <p class="text-[9px] font-medium text-zinc-500">Lv. 80</p>
+                                </div>
+                                <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary w-[30%]"></div>
+                                </div>
+                            </div>
+                            <!-- Party Slot 4 -->
+                            <div
+                                class="bg-surface-container p-3 rounded-xl flex flex-col items-center gap-2 group transition-all cursor-pointer hover:bg-surface-container-high">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                    <img class="w-10 h-10 object-contain"
+                                        data-alt="Stylized giant dinosaur with a flower on its back in a soft garden-like atmosphere"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_VH-Pq2kwLQOxRCVIIty-iGiX1tNuRSV0FIJyUlC97ewlrAYOpv7Le_63aR_Fu5GWq6hOUdolcJWYCVMRLy1bU6ImRsUxlyXvnapEzERApkGoBhzwYJ7o_RTvv36ar3Su7vEP9A9AW6HOseKGPbxwYcWmD6AEejvMiW9WsBWUKMSFZLRmj5rBDGOxI4uMwEK2abTiOQhGYneON_Ib_VV4vRfT-FDl6a6kJm0jPryDDcjACo3dhaIdASuyoJ3q7BEa8zoza78p7Q0" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold uppercase tracking-tighter text-zinc-900">Venusaur
+                                    </p>
+                                    <p class="text-[9px] font-medium text-zinc-500">Lv. 76</p>
+                                </div>
+                                <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[82%]"></div>
+                                </div>
+                            </div>
+                            <!-- Party Slot 5 -->
+                            <div
+                                class="bg-surface-container p-3 rounded-xl flex flex-col items-center gap-2 group transition-all cursor-pointer hover:bg-surface-container-high">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                    <img class="w-10 h-10 object-contain"
+                                        data-alt="Stylized sleepy giant bear-like creature in a calm forest resting spot"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnKtQUlrXGZ8lXdOUWDmF0IRIfsf3vR6Kh8B4psDagQpj0j_PZ7bA7ePSl0LiTgRHf3rOisjRf8p8dtYyL0dtzLZe4vWTBOWm-UFQn9VzXE6RRyI8rz4_bvZE8az-nQRVk4lCOUVim-OT8qV-bZSWvoc9K9b-4lAFy1JTDRST20kMFO01nEHtxJUEcMDoCQ8cFTLhmNTEeDsNm0kx4iRBgDpYqw3PXLSxz87vWf4R2tGN0WRc2o0aruqK-pCyPOy6DLaembz-JyUk" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold uppercase tracking-tighter text-zinc-900">Snorlax
+                                    </p>
+                                    <p class="text-[9px] font-medium text-zinc-500">Lv. 72</p>
+                                </div>
+                                <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[100%]"></div>
+                                </div>
+                            </div>
+                            <!-- Party Slot 6 -->
+                            <div
+                                class="bg-surface-container p-3 rounded-xl flex flex-col items-center gap-2 group transition-all cursor-pointer hover:bg-surface-container-high">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                    <img class="w-10 h-10 object-contain"
+                                        data-alt="Stylized purple floating ghost with a mischievous grin in a dark shadowy environment"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCokFM3AYS0Piu-hM6LTfY1APAGJx_BOOVTA285xdYqewWVV2DMDziNkN3tSyQ4KsHTCpuVfLTs-4u_hhIHt9xTFWMncD-unQA9CPQPapcsEKRndY85-U5TH3R8VV4mZHwRJe_4UFN1MHxvq1vKFj66inlkxG-h656S9rQ0wOFOyKfuehXHpDPThF2Wvk0zg01qmtaPOCJ7DxzdDd7rf-RWHVwUEFKjoW4088fg2wrAIirUeekpXxYtBvRci_mLJF3hwAmXQYY1C7U" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold uppercase tracking-tighter text-zinc-900">Gengar</p>
+                                    <p class="text-[9px] font-medium text-zinc-500">Lv. 74</p>
+                                </div>
+                                <div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[90%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Recent Activity Section -->
+                    <section class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold tracking-tight">Atividades recentes</h3>
+                            <button id="clear-activity-btn"
+                                class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-primary transition-colors flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm" translate="no">delete_sweep</span>
+                                Limpar
+                            </button>
+                        </div>
+                        <div id="recent-activity-container"
+                            class="bg-surface-container-low rounded-2xl overflow-hidden divide-y divide-zinc-100">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </section>
+                </div>
+                <!-- Secondary Rail / Sidebar Content -->
+                <div class="lg:col-span-4 space-y-8">
+                    <!-- Trainer Progress Card -->
+                    <div class="bg-primary text-on-primary p-8 rounded-2xl relative overflow-hidden group shadow-xl">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform">
+                        </div>
+                        <div class="relative z-10 space-y-6">
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-widest opacity-80">League Status</h4>
+                                <p class="text-2xl font-black mt-1">Indigo Plateau Finalist</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest">
+                                    <span>Badge Progress</span>
+                                    <span>8 / 8</span>
+                                </div>
+                                <div class="w-full h-2 bg-black/20 rounded-full overflow-hidden">
+                                    <div class="h-full bg-white w-full"></div>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full py-3 bg-white text-primary rounded-xl text-sm font-bold shadow-sm active:scale-95 transition-all">
+                                View Championship Bracket
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Upcoming Missions Widget -->
+                    <div class="bg-surface-container-high/40 p-6 rounded-2xl space-y-6">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Missões Ativas
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="w-1 h-12 bg-primary rounded-full"></div>
+                                <div class="flex-1">
+                                    <p class="text-xs font-bold uppercase text-primary">Missão Prioritária</p>
+                                    <p class="text-sm font-bold">Investigar a Aura de Mewtwo</p>
+                                    <p class="text-[10px] text-zinc-500 font-medium">Caverna Cerulean • Em andamento</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-1 h-12 bg-secondary rounded-full"></div>
+                                <div class="flex-1">
+                                    <p class="text-xs font-bold uppercase text-secondary">Nova Descoberta</p>
+                                    <p class="text-sm font-bold">Decifrar Símbolos Desconhecidos</p>
+                                    <p class="text-[10px] text-zinc-500 font-medium">Ruínas de Alph • 2 dias restantes
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Region Map Preview -->
+                    <div
+                        class="bg-surface-container-low rounded-2xl overflow-hidden group relative h-48 cursor-pointer shadow-sm">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                            data-alt="Topographic map of Kanto region with lush forests, mountain ranges, and coastal routes in a minimalist cartographic style"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCkT2WprqjSHheUEVdxzHNLWjZ7TpDQBM99JGF6ihYVB6CR9bxz49-bv6zM1H9fLkFr9ee9uGkcgDWU0fUyS2SqCXOjVfF8u9p2qFXksbPy5UbexXkQvuBYTcrC_Qen09RYDm5JwZa8lOCJqCIR17W40z-PKW6pyN_LX0yLzftW-Zlfx3qOAe67vb_8DNCRLwB-ZFnwfI2B5oUa83bvb3oXbZITNWB-0MCHxohNqjbR3JgkVcy1LWkl68Guc7Oshqr1XS9_-r1LbRk');">
+                            <div class="absolute inset-0 bg-zinc-900/40 group-hover:bg-zinc-900/20 transition-colors">
+                            </div>
+                        </div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Local</p>
+                            <h5 class="text-lg font-bold">Pallet Town</h5>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-primary text-white p-2 rounded-full">
+                            <span class="material-symbols-outlined text-sm" translate="no">my_location</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- BottomNavBar (Mobile Only) -->
+
+
+    <!-- BottomNavBar (Mobile Only) -->
+
+    <nav
+        class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 pb-safe bg-white/90 dark:bg-zinc-900/90 backdrop-blur-lg lg:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-zinc-200 dark:border-zinc-800 overflow-x-auto">
+
+        <a class="flex flex-col items-center justify-center text-red-700 dark:text-red-500 scale-110 transition-colors"
+            href="9-Dashboard.html">
+            <span class="material-symbols-outlined" translate="no">dashboard</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Painel</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="8-Pokemon_Box.html">
+            <span class="material-symbols-outlined" translate="no">inventory_2</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Box</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="11-Party_Management.html">
+            <span class="material-symbols-outlined" translate="no">groups</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Party</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="7-Trainer_Profile.html">
+            <span class="material-symbols-outlined" translate="no">person</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Perfil</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="6-Messages.html">
+            <span class="material-symbols-outlined" translate="no">chat</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Mensagens</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="10-Trainers.html">
+            <span class="material-symbols-outlined" translate="no">badge</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Treinadores</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-red-500 transition-colors"
+            href="4-Professor_AI.html">
+            <span class="material-symbols-outlined" translate="no">psychology</span>
+            <span class="text-[8px] font-bold tracking-wide uppercase mt-1 text-center leading-tight">Perguntas
+                IA</span>
+        </a>
+    </nav>
+
+</body>
+
+</html>

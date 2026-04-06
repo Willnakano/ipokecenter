@@ -1,0 +1,36 @@
+@import 'variables.css';
+
+/* 
+   ESTILOS DO GERENCIAMENTO DE TIME
+   Centralizado para usar as variáveis globais do PokeSystem.
+*/
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--color-bg-body) !important; 
+    color: var(--color-text-main); 
+}
+
+.material-symbols-outlined { 
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+}
+
+/* Painel com efeito de desfoque */
+.glass-panel { 
+    background: var(--color-bg-card); 
+    backdrop-filter: blur(12px); 
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* O efeito glass agora é tratado globalmente no variables.css */
+
+/* Barra de rolagem customizada */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-primary-faded); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+/* 
+   Nota: As cores agora são controladas pelo variables.css.
+   Isso permite mudar o tema do site todo em um só lugar.
+*/
