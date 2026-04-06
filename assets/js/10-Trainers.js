@@ -132,31 +132,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const deleteTrainer = (trainerId) => {
+        let trainers = DB.getOtherTrainers();
+        // Não permite excluir os treinadores padrão (Red e Cynthia)
+        const defaultIds = ['trainer-red', 'trainer-cynthia'];
+        if (defaultIds.includes(trainerId)) return;
+
+        const updated = trainers.filter(t => t.id !== trainerId);
+        DB.saveOtherTrainers(updated);
+        trainers = updated;
+
+        // Limpa o perfil se o excluído estava selecionado
+        if (selectedTrainerId === trainerId) {
+            selectedTrainerId = null;
+            profileView.classList.add('hidden');
+        }
+
+        renderTrainerList();
+    };
+
     const renderTrainerList = () => {
         // Limpa apenas o que não for estático
         const dynamicItems = trainerList.querySelectorAll('.trainer-dynamic-item');
         dynamicItems.forEach(item => item.remove());
+
+        // Recarrega array atualizado
+        trainers = DB.getOtherTrainers();
 
         trainers.forEach(trainer => {
             // Pula se já existir no HTML como estático
             if (document.querySelector(`.trainer-static-item[data-id="${trainer.id}"]`)) return;
 
             const item = document.createElement('div');
-            item.className = "trainer-dynamic-item p-4 flex items-center gap-4 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all border-l-4 border-transparent";
+            item.className = "trainer-dynamic-item p-4 flex items-center gap-4 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all border-l-4 border-transparent group relative";
             item.dataset.id = trainer.id;
             
             item.innerHTML = `
-                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 shadow-sm">
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 shadow-sm shrink-0">
                     <img src="${trainer.avatar}" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 overflow-hidden">
                     <h4 class="text-sm font-bold truncate dark:text-white">${trainer.name}</h4>
                     <p class="text-[9px] font-black tracking-widest text-zinc-400 uppercase">${trainer.title}</p>
                 </div>
-                <div class="text-right">
+                <div class="flex items-center gap-2">
                     <span class="text-[9px] font-bold text-emerald-600 block">${trainer.stats.wins}V</span>
+                    <button class="delete-trainer-btn p-1 bg-red-50 dark:bg-red-900/30 text-red-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-800/50 rounded-lg opacity-0 group-hover:opacity-100 transition-all" title="Excluir treinador">
+                        <span class="material-symbols-outlined text-[14px]" translate="no">delete</span>
+                    </button>
                 </div>
             `;
+
+            // Botão excluir
+            item.querySelector('.delete-trainer-btn').onclick = (e) => {
+                e.stopPropagation();
+                if (confirm(`Excluir o treinador "${trainer.name}"? Esta ação não pode ser desfeita.`)) {
+                    deleteTrainer(trainer.id);
+                }
+            };
 
             item.onclick = () => selectTrainer(trainer.id);
             trainerList.appendChild(item);
