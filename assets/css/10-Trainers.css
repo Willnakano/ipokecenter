@@ -30,7 +30,28 @@ body {
     border-left-color: var(--color-primary);
 }
 
-/* 3. Transições de Perfil */
+/* 3. Layout Principal Desktop (override explícito) */
+@media (min-width: 1024px) {
+    /* Container principal: lado a lado no desktop */
+    main > div {
+        flex-direction: row !important;
+    }
+
+    /* Painel lateral de treinadores: largura fixa */
+    main > div > div:first-child {
+        width: 20rem !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Painel de detalhes: ocupa o resto, conteúdo em coluna */
+    #profile-view {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 1 0% !important;
+    }
+}
+
+/* 4. Transições de Perfil */
 #profile-view {
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
