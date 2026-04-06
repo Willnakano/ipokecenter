@@ -32,10 +32,10 @@
 <body class="dark:text-white flex items-center justify-center min-h-screen p-4 md:p-8">
 
     <div
-        class="relative w-full max-w-[1200px] aspect-video bg-white dark:bg-gray-800 rounded-3xl shadow-2xl flex overflow-hidden">
+        class="relative w-full max-w-[1200px] md:aspect-video bg-white dark:bg-gray-800 rounded-3xl shadow-2xl flex overflow-hidden min-h-screen md:min-h-0">
 
         <!-- LOGIN -->
-        <div class="flex-1 flex flex-col p-12 relative">
+        <div class="flex-1 flex flex-col p-6 md:p-12 relative">
 
             <!-- Toggle -->
             <button id="theme-toggle"
@@ -124,7 +124,7 @@
         </div>
 
         <!-- RIGHT SIDE (SINGLE IMAGE) -->
-        <div class="w-[45%] relative flex items-end p-12 text-white overflow-hidden bg-black">
+        <div class="hidden md:flex w-[45%] relative items-end p-12 text-white overflow-hidden bg-black">
 
             <!-- Background Image -->
             <div class="absolute inset-0 z-0">
